@@ -38,6 +38,8 @@ Copy `keys.txt.example` into a new file called `keys.txt` and put your client ID
 - Click the "Fetch emails" button
 - Wait for your emails to be scanned. This can take a few seconds to a few minutes depending on how many emails you're scanning.
 
+![Inbox Zero app screenshot](https://i.imgur.com/mRbQyx6.png)
+
 And… voila! Your results should show up once they've all been fetched, along with links to filter your most pesky email senders and/or unsubscribe and delete their emails.
 
 
