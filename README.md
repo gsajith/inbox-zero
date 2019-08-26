@@ -1,4 +1,4 @@
-![Inbox Zero header image](https://i.imgur.com/SMVpdbl.png "Inbox Zero header image")
+![Inbox Zero header image](https://i.imgur.com/r2O8l3T.png "Inbox Zero header image")
 
 # About
 
