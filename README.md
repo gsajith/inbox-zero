@@ -28,7 +28,8 @@ Copy `keys.txt.example` into a new file called `keys.txt` and put your client ID
 `python -m SimpleHTTPServer 8000`
 
 ## Navigate to http://localhost:8000 to see the app running locally! 
-- Authorize your app with the Gmail account you want to scan:
+
+## Authorize your app with the Gmail account you want to scan:
 - Click the "Authorize" button
 - Navigate past the "This app isn't verified" screen, if shown, by clicking "Advanced" and "Go to app name"
 - Grant the required permissions to read your email
