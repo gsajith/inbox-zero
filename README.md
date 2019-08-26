@@ -1,3 +1,5 @@
+![Inbox Zero header image](https://i.imgur.com/SMVpdbl.png "Inbox Zero header image")
+
 # About
 
 I found myself constantly asking a simple question: "Who sends me the most email?"
