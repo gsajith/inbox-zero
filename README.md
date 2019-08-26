@@ -5,7 +5,7 @@ I found myself constantly asking a simple question: "Who sends me the most email
 Google searches to see if there is any tool to help me answer this question turned up the same answers:
 
 - No. (oof)
-- Download all your emails and put it into an data analysis tool like BigQuery or GYB. (yikes)
+- Download all your emails and put it into a data analysis tool like BigQuery or GYB. (yikes)
 
 None of these options seemed good, so I've open sourced this tool to let you see who sends you the most emails and quickly filter/delete those senders.
 
@@ -28,8 +28,8 @@ Copy `keys.txt.example` into a new file called `keys.txt` and put your client ID
 ## Navigate to http://localhost:8000 to see the app running locally! 
 - Authorize your app with the Gmail account you want to scan:
 - Click the "Authorize" button
-- Navigate past the "This app isn't verified" screen, if shown, by clicking "Advanced" and "Go to <app name>"
-Grant the required permissions to read your email
+- Navigate past the "This app isn't verified" screen, if shown, by clicking "Advanced" and "Go to app name"
+- Grant the required permissions to read your email
 
 ## Fetch your emails:
 - Click the "Fetch emails" button
