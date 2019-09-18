@@ -98,11 +98,11 @@ function initClient() {
       }
     })
   }, (error) => {
+    console.log(error);
     var error = document.getElementById('error');
     error.style.display = 'block';
     const errorText = document.createTextNode(`${JSON.stringify(error, null, 2)}\n`);
     error.appendChild(errorText);
-    console.log(error);
   });
 }
 
