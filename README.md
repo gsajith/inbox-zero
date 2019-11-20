@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Inbox Zero header image](https://i.imgur.com/r2O8l3T.png "Inbox Zero header image")
 
-## Available Scripts
+# About
 
-In the project directory, you can run:
+I found myself constantly asking a simple question: "Who sends me the most email?"
 
-### `npm start`
+Google searches to see if there is any tool to help me answer this question turned up the same answers:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- No. (oof)
+- Download all your emails and put it into a data analysis tool like BigQuery or GYB. (yikes)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+None of these options seemed good, so I've open sourced this tool to let you see who sends you the most emails and quickly filter/delete those senders.
 
-### `npm test`
+# Setup
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Clone the git repo:
+```clone command```
 
-### `npm run build`
+### Get your own Gmail client ID and API key: 
+- Easiest way to do this is through the [Gmail Quickstart tutorial](https://developers.google.com/gmail/api/quickstart/js) which will create a Google Cloud Platform project for you with the Gmail API enabled, and give you both your client ID and API key.
+- Alternatively, you can create a new project and enable the Gmail API yourself via the [Google Cloud Platform dashboard](https://console.cloud.google.com/home/dashboard).
+- Don't share these keys publicly.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Create `keys.txt` to add your own keys:
+Copy `keys.txt.example` into a new file called `keys.txt` and put your client ID and API key into the placeholder fields labeled "`your client ID here`" and "`your API key here`".
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Run the app:
+`python -m SimpleHTTPServer 8000`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Navigate to http://localhost:8000 to see the app running locally! 
 
-### `npm run eject`
+### Authorize your app with the Gmail account you want to scan:
+- Click the "Authorize" button
+- Navigate past the "This app isn't verified" screen, if shown, by clicking "Advanced" and "Go to app name"
+- Grant the required permissions to read your email
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Fetch your emails:
+- Click the "Fetch emails" button
+- Wait for your emails to be scanned. This can take a few seconds to a few minutes depending on how many emails you're scanning.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Inbox Zero app screenshot](https://i.imgur.com/mRbQyx6.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+And… voila! Your results should show up once they've all been fetched, along with links to filter your most pesky email senders and/or unsubscribe and delete their emails.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Don't want to go through the process of cloning and running your own version of the app? 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Send me a tweet [@GuamHat](https://twitter.com/GuamHat) and we can talk about whitelisting you to use my version that's running at <link>!
