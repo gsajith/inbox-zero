@@ -30,18 +30,22 @@ export default class ScanPage extends React.PureComponent {
 
   render() {
     const {
-      emails, numEmails, estimate, signOut, fetchEmails, fetchStatus,
+      emails, numEmails, emailsFetched, estimate, signOut, fetchStatus,
     } = this.props;
+
+    const emailsArray = Object.values(emails);
+
+    emailsArray.sort((a, b) => (a.numUnread < b.numUnread ? 1 : -1));
 
     return (
       <>
         <div className={
-          (emails.length > 0 || fetchStatus === FETCH_IN_PROGRESS)
+          (emailsArray.length > 0 || fetchStatus === FETCH_IN_PROGRESS)
             ? 'emails-container'
             : 'emails-container hidden'
-          }
+        }
         >
-          {emails.map((email) => (
+          {emailsArray.map((email) => (
             <EmailItem
               key={email.senderEmail}
               sender={email.sender}
@@ -52,11 +56,11 @@ export default class ScanPage extends React.PureComponent {
           ))}
         </div>
         {fetchStatus === FETCH_INACTIVE && (
-        <label id="filter" className="check-container" htmlFor="unread-filter" tabIndex="0">
-          Only scan unread emails
-          <input id="unread-filter" type="checkbox" defaultChecked="checked" />
-          <span className="checkmark" />
-        </label>
+          <label id="filter" className="check-container" htmlFor="unread-filter" tabIndex="0">
+            Only scan unread emails
+            <input id="unread-filter" type="checkbox" defaultChecked="checked" />
+            <span className="checkmark" />
+          </label>
         )}
         <div className="description estimate">
           Estimated time:
@@ -70,14 +74,14 @@ export default class ScanPage extends React.PureComponent {
         >
           {fetchStatus === FETCH_IN_PROGRESS && (
             <>
-            Fetching
+              Fetching
               {' '}
-              {numberToCommaString(emails.length * 1000)}
+              {numberToCommaString(emailsFetched)}
               {' '}
               /
               {numberToCommaString(numEmails)}
               {' '}
-            emails
+              emails
             </>
           )}
           {fetchStatus === FETCH_INACTIVE && (
@@ -103,12 +107,8 @@ export default class ScanPage extends React.PureComponent {
 }
 
 ScanPage.propTypes = {
-  emails: PropTypes.arrayOf(PropTypes.shape({
-    sender: PropTypes.string,
-    senderEmail: PropTypes.string,
-    numUnread: PropTypes.string,
-    lastEmailDate: PropTypes.string,
-  })),
+  emails: PropTypes.shape(),
+  emailsFetched: PropTypes.number.isRequired,
   numEmails: PropTypes.number.isRequired,
   estimate: PropTypes.string.isRequired,
   signOut: PropTypes.func.isRequired,
@@ -117,11 +117,11 @@ ScanPage.propTypes = {
 };
 
 ScanPage.defaultProps = {
-  emails: [/* {
+  emails: {/* {
     sender: 'GrubHub',
     senderEmail: '<GrubHub@gmail.com>',
     numUnread: '180',
     lastEmailDate: '07-12-2018',
-  } */],
+  } */},
   fetchStatus: FETCH_INACTIVE,
 };

@@ -8,12 +8,14 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  -webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
   .email-sender {
     font-weight: 500;
     flex-basis: 100%;
+  }
+
+  .email-sender-email {
+    font-weight: 300;
   }
 
   .email-filter-link {
@@ -30,7 +32,7 @@
       }
     }
 
-    &:after {    
+    &:after {
       content: "";
       display: inline-block;
       background-color: red;
@@ -48,30 +50,5 @@
   .email-last-date {
     font-weight: 200;
     margin-left: auto;
-  }
-}
-
-@-webkit-keyframes slide-in-right {
-  0% {
-    -webkit-transform: translateX(1000px);
-            transform: translateX(1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    opacity: 1;
-  }
-}
-@keyframes slide-in-right {
-  0% {
-    -webkit-transform: translateX(1000px);
-            transform: translateX(1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    opacity: 1;
   }
 }

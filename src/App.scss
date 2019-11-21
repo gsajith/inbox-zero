@@ -61,7 +61,9 @@ body {
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     & :-webkit-autofill:active {
+        transition:  "color 9999s ease-out, background-color 9999s ease-out";
         -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        transition-delay: 9999s;
         -webkit-transition-delay: 9999s;
     }
   }

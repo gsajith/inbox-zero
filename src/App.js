@@ -1,34 +1,91 @@
 import React from 'react';
 import './App.scss';
 import HomePage from './containers/HomePage/HomePage';
+import LoadingPage from './containers/LoadingPage/LoadingPage';
 import AuthorizePage from './containers/AuthorizePage/AuthorizePage';
 import ScanPage from './containers/ScanPage/ScanPage';
 import mountScripts from './api/scripts';
 import { signOut, signIn, checkSignInStatus } from './api/authentication';
-import { fetchEmailCounts, startFetchEmails, listMessages } from './api/api';
+import { fetchEmailCounts, listMessages } from './api/api';
 import {
   SIGNED_OUT,
   SIGNED_IN,
   NO_AUTH,
   AUTH_FAIL,
+  LOADING,
   MILLIS_PER_EMAIL,
   FETCH_INACTIVE,
   FETCH_IN_PROGRESS,
 } from './shared/constants';
+
+let globalEmails = {};
+let globalFetchedEmailCount = 0;
+let updateEmailInterval = 0;
+let updateCountInterval = 0;
 
 function millisToMinutes(millis) {
   const minutes = Math.ceil(millis / 60000);
   return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
 }
 
+function filterDomain(emailFrom) {
+  if (!emailFrom.includes('<')) {
+    return emailFrom;
+  }
+  return emailFrom.substring(emailFrom.lastIndexOf('<'), emailFrom.lastIndexOf('>') + 1);
+}
+
+function filterSender(emailFrom) {
+  return emailFrom.substring(0, emailFrom.indexOf('<'));
+}
+
 export default class App extends React.Component {
+  static updateFetchedEmails(email) {
+    const from = email.payload.headers.filter((header) => header.name.toLowerCase() === 'from');
+
+    const date = email.payload.headers.filter((header) => header.name.toLowerCase() === 'date');
+
+    if (date[0] === undefined) {
+      return;
+    }
+
+    if (from.length === 0) {
+      console.error(email);
+    }
+    const emailDomain = filterDomain(from[0].value);
+
+    if (emailDomain.length === 0) {
+      console.error(email);
+    }
+
+    let emailObject = {};
+    if (globalEmails[emailDomain] === undefined) {
+      const emailSender = filterSender(from[0].value);
+      emailObject = {
+        sender: emailSender,
+        senderEmail: emailDomain,
+        numUnread: 1,
+        lastEmailDate: new Date(date[0].value).getTime(),
+      };
+    } else {
+      emailObject = globalEmails[emailDomain];
+      emailObject.numUnread += 1;
+      if (new Date(date[0].value).getTime() > emailObject.lastEmailDate) {
+        emailObject.lastEmailDate = new Date(date[0].value).getTime();
+      }
+    }
+
+    globalEmails[emailDomain] = emailObject;
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
       numEmails: 0,
-      emails: [],
-      signInStatus: NO_AUTH,
+      emailsFetched: 0,
+      emails: {},
+      signInStatus: LOADING,
       fetchStatus: FETCH_INACTIVE,
       user: null,
     };
@@ -40,7 +97,8 @@ export default class App extends React.Component {
     this.onSignout = this.onSignout.bind(this);
     this.onSignOutSuccess = this.onSignOutSuccess.bind(this);
     this.fetchEmails = this.fetchEmails.bind(this);
-    this.updateFetchedEmails = this.updateFetchedEmails.bind(this);
+    this.updateEmails = this.updateEmails.bind(this);
+    this.updateEmailCount = this.updateEmailCount.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +118,7 @@ export default class App extends React.Component {
     signIn()
       .then(this.onSignInSuccess)
       .catch((error) => {
-      // TODO
+        // TODO
         console.error(error);
       });
   }
@@ -94,34 +152,45 @@ export default class App extends React.Component {
     console.log('signed out');
   }
 
-  fetchEmails() {
+  updateEmails() {
     this.setState({
-      fetchStatus: FETCH_IN_PROGRESS,
-    });
-    console.log('stop trying to make fetch happen');
-
-    startFetchEmails(this.updateFetchedEmails).then(() => {
-      this.setState({
-        fetchStatus: FETCH_INACTIVE,
-        fetchedEmails: 0,
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    listMessages(undefined, 0, (email) => {
-      // TODO update fetched emails
-      askldfjlksdjf
-    }, (responseCount) => {
-      console.log('finished: ' + responseCount);
-    }).then().catch((error) => {
-      console.log(error);
+      emails: JSON.parse(JSON.stringify(globalEmails)),
     });
   }
 
-  updateFetchedEmails(email) {
+  updateEmailCount() {
     this.setState({
-      emails: [...this.state.emails, email],
+      emailsFetched: globalFetchedEmailCount,
+    });
+  }
+
+  fetchEmails() {
+    this.setState({
+      fetchStatus: FETCH_IN_PROGRESS,
+      emails: {},
+      emailsFetched: 0,
+    });
+
+    globalEmails = {};
+    globalFetchedEmailCount = 0;
+
+    updateEmailInterval = setInterval(this.updateEmails, 1000);
+
+    updateCountInterval = setInterval(this.updateEmailCount, 83);
+
+    listMessages(undefined, 0, (email) => {
+      App.updateFetchedEmails(email);
+      globalFetchedEmailCount += 1;
+    }, () => {
+      clearInterval(updateEmailInterval);
+      clearInterval(updateCountInterval);
+      this.updateEmails();
+      this.updateEmailCount();
+      this.setState({
+        fetchStatus: FETCH_INACTIVE,
+      });
+    }).then().catch((error) => {
+      console.log(error);
     });
   }
 
@@ -157,8 +226,9 @@ export default class App extends React.Component {
 
   render() {
     const {
-      numEmails, emails, signInStatus, user, fetchStatus,
+      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus,
     } = this.state;
+
     return (
       <div className="container">
         <div className="title">
@@ -166,19 +236,21 @@ export default class App extends React.Component {
           {' '}
           <span className="title-highlight">Zero</span>
         </div>
-        { signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} /> }
+        {signInStatus === LOADING && <LoadingPage />}
+        {signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} />}
         {(signInStatus === AUTH_FAIL || signInStatus === SIGNED_OUT)
-          && <AuthorizePage clickAuthorize={this.onSignIn} /> }
+          && <AuthorizePage clickAuthorize={this.onSignIn} />}
         {signInStatus === SIGNED_IN
           && (
-          <ScanPage
-            numEmails={numEmails}
-            emails={emails}
-            estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
-            signOut={this.onSignout}
-            fetchEmails={this.fetchEmails}
-            fetchStatus={fetchStatus}
-          />
+            <ScanPage
+              numEmails={numEmails}
+              emailsFetched={emailsFetched}
+              emails={emails}
+              estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
+              signOut={this.onSignout}
+              fetchEmails={this.fetchEmails}
+              fetchStatus={fetchStatus}
+            />
           )}
       </div>
     );
