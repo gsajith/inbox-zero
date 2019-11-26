@@ -16,6 +16,85 @@ a {
   }
 }
 
+.about-modal-wrapper {
+  border: none;
+  position: absolute;
+  top:0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, .4);
+
+  .about-modal {
+    position: absolute;
+    color: $black;
+    border: none;
+    background: $light-pink;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, .45);
+    width: 500px;
+    max-height: 360px;
+    overflow: scroll;
+    top: calc(25vh - 180px);
+    left: calc(50vw - 250px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: none;
+
+    .close-icon {
+      color: $dark-pink;
+      border: none;
+      background: none;
+      font-family: Arial;
+      flex-basis: 10%;
+      height: 48px;
+      font-weight: 900;
+      font-size: 24px;
+      padding-left: 8px;
+      margin-right: 20px;
+
+      &:hover {
+        color: $dark-pink-hover;
+        cursor: pointer;
+      }
+    }
+
+    .about-text {
+      flex-basis: 90%;
+      font-size: 14px;
+      align-self: center;
+
+      .about-footer {
+        font-size: 8px;
+        text-align: center;
+        width: 100%;
+      }
+
+      a {
+        font-weight: 700;
+        color: $black;
+
+        &:hover {
+          color: $dark-pink;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 530px) {
+    .about-modal {
+      width: calc(100% - 30px);
+      left: 15px;
+      margin-top: 20px;
+
+      .about-text {
+        align-self: start;
+      }
+    }
+  }
+}
+
 .container {
   width: 100%;
   max-width: $max-desktop-width;
@@ -28,6 +107,29 @@ a {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   min-height: $min-height;
   transition: all 200ms ease-in-out;
+
+  .about-modal-link {
+    position: absolute;
+    background: none;
+    border: none;
+    align-items: center;
+    right: calc((100vw - #{$max-desktop-width})/2 + 15px);
+    bottom: calc(5vh + 15px);
+    font-size: 12px;
+    color: $black;
+
+    &:hover {
+      cursor: pointer;
+      color: $dark-pink;
+    }
+  }
+
+  @media only screen and (max-width: $desktop-break1) {
+    .about-modal-link {
+      right: 40px;
+    }
+  }
+
 
   .flex-container {
     height: 100%;

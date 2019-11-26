@@ -26,6 +26,7 @@ let updateCountInterval = 0;
 
 // TODO: Create API Key link
 // TODO: Unread check
+// TODO: Overlapping name/about when small screens
 
 function millisToMinutes(millis) {
   const minutes = Math.ceil(millis / 60000);
@@ -92,6 +93,7 @@ export default class App extends React.Component {
       signInStatus: LOADING,
       fetchStatus: FETCH_INACTIVE,
       user: null,
+      aboutModalShown: false,
     };
 
     this.init = this.init.bind(this);
@@ -103,6 +105,8 @@ export default class App extends React.Component {
     this.fetchEmails = this.fetchEmails.bind(this);
     this.updateEmails = this.updateEmails.bind(this);
     this.updateEmailCount = this.updateEmailCount.bind(this);
+    this.showAboutModal = this.showAboutModal.bind(this);
+    this.hideAboutModal = this.hideAboutModal.bind(this);
   }
 
   componentDidMount() {
@@ -235,42 +239,107 @@ export default class App extends React.Component {
     window.gapi.load('client:auth2', this.initClient);
   }
 
+  showAboutModal(e) {
+    this.setState({
+      showAboutModal: true,
+    });
+
+    e.stopPropagation();
+  }
+
+  hideAboutModal(e) {
+    console.log('click');
+    this.setState({
+      showAboutModal: false,
+    });
+
+    e.stopPropagation();
+  }
+
   render() {
     const {
-      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus,
+      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal
     } = this.state;
 
     return (
-      <div className="container">
-        {signInStatus === SIGNED_IN && (
-          <UserStatus
-            user={user}
-          />
-        )}
-        <div className="flex-container">
-          <div className="title">
-            Inbox
-            {' '}
-            <span className="title-highlight">Zero</span>
+      <>
+        <div className="container">
+          {signInStatus === SIGNED_IN && (
+            <UserStatus
+              user={user}
+            />
+          )}
+          <div className="flex-container">
+            <div className="title">
+              Inbox
+              {' '}
+              <span className="title-highlight">Zero</span>
+            </div>
+            {signInStatus === LOADING && <LoadingPage />}
+            {signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} />}
+            {(signInStatus === AUTH_FAIL || signInStatus === SIGNED_OUT)
+              && <AuthorizePage clickAuthorize={this.onSignIn} />}
+            {signInStatus === SIGNED_IN
+              && (
+                <ScanPage
+                  numEmails={numEmails}
+                  emailsFetched={emailsFetched}
+                  emails={emails}
+                  estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
+                  signOut={this.onSignout}
+                  fetchEmails={this.fetchEmails}
+                  fetchStatus={fetchStatus}
+                />
+              )}
           </div>
-          {signInStatus === LOADING && <LoadingPage />}
-          {signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} />}
-          {(signInStatus === AUTH_FAIL || signInStatus === SIGNED_OUT)
-            && <AuthorizePage clickAuthorize={this.onSignIn} />}
-          {signInStatus === SIGNED_IN
-            && (
-              <ScanPage
-                numEmails={numEmails}
-                emailsFetched={emailsFetched}
-                emails={emails}
-                estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
-                signOut={this.onSignout}
-                fetchEmails={this.fetchEmails}
-                fetchStatus={fetchStatus}
-              />
-            )}
+          <button className="about-modal-link" type="button" onClick={this.showAboutModal}>
+            About Inbox Zero
+          </button>
         </div>
-      </div>
+        {showAboutModal && (
+          <div
+            className="about-modal-wrapper"
+            onClick={this.hideAboutModal}
+            onKeyPress={this.hideAboutModal}
+            role="link"
+            tabIndex={-1}
+          >
+            <div
+              className="about-modal"
+              onClick={this.showAboutModal}
+              onKeyPress={this.showAboutModal}
+              role="link"
+              tabIndex={-1}
+            >
+              <button className="close-icon" type="button" onClick={this.hideAboutModal}>
+                X
+              </button>
+              <div className="about-text">
+                <b>Inbox Zero</b>
+                {' '}
+                is an open-source tool which scans your Gmail inbox and tells you
+                who sends you the most emails.
+                <br />
+                <br />
+                It provides links to help you easily filter, unsubscribe from, and delete these
+                emails. This tool scans your email inbox, but none of your data is stored or
+                transferred to anybody. If you&apos;d like to check for yourself, the code is
+                {' '}
+                <a href="https://github.com/gsajith/inbox-zero" target="_blank" rel="noopener noreferrer">open-sourced here</a>
+                .
+                <br />
+                <br />
+                <div className="about-footer">
+                  This tool is licensed under the GNU General Public License v3.0.
+                  <br />
+                  © 2019 Gautham Sajith All Rights Reserved
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+        }
+      </>
     );
   }
 }
