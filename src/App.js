@@ -244,12 +244,13 @@ export default class App extends React.Component {
       <div className="container">
         {signInStatus === SIGNED_IN && (
           <UserStatus
-            user={user} />
+            user={user}
+          />
         )}
         <div className="flex-container">
           <div className="title">
             Inbox
-                {' '}
+            {' '}
             <span className="title-highlight">Zero</span>
           </div>
           {signInStatus === LOADING && <LoadingPage />}

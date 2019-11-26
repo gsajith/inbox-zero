@@ -14,4 +14,6 @@ const mountScripts = () => new Promise((resolve) => {
   document.body.appendChild(script);
 });
 
-export { mountScripts as default };
+export {
+  mountScripts as default,
+};

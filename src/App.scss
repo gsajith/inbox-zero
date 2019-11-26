@@ -1,7 +1,7 @@
 @import "/shared/variables";
 
 * {
-  font-family:'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -10,6 +10,7 @@ body {
 
 a {
   color: $dark-pink;
+
   &:hover {
     color: $dark-pink-hover;
   }
@@ -46,15 +47,18 @@ a {
       letter-spacing: 0.15px;
       color: $white;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background: $black-hover;
       }
 
-      &::-webkit-input-placeholder { /* Edge */
+      &::-webkit-input-placeholder {
+        /* Edge */
         color: $light-pink;
       }
 
-      &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
         color: $light-pink;
       }
 
@@ -66,10 +70,10 @@ a {
       &:-webkit-autofill:hover,
       &:-webkit-autofill:focus,
       & :-webkit-autofill:active {
-          transition:  "color 9999s ease-out, background-color 9999s ease-out";
-          -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-          transition-delay: 9999s;
-          -webkit-transition-delay: 9999s;
+        transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        transition-delay: 9999s;
+        -webkit-transition-delay: 9999s;
       }
     }
 
@@ -125,12 +129,14 @@ a {
         box-shadow: none;
         outline: none;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: $light-pink;
         }
       }
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background: $dark-pink-hover;
       }
 
@@ -140,7 +146,8 @@ a {
         box-shadow: none;
         border: 2px solid $dark-pink;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: $light-pink;
           color: $dark-pink-hover;
         }

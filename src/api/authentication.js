@@ -1,3 +1,6 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable indent */
+
 // Adapted from https://github.com/elongineer/react-gmail-client
 import {
   SIGNED_OUT,
@@ -27,7 +30,9 @@ export const initGmailClient = (clientId, apiKey) => {
   // included, separated by spaces.
   const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
 
-  const { gapi } = window;
+  const {
+    gapi,
+  } = window;
 
   return gapi.client.init({
     apiKey: API_KEY,
@@ -46,16 +51,18 @@ export const updateSigninStatus = (isSignedIn) => {
 
 export const checkSignInStatus = (clientId, apiKey) => new Promise((resolve, reject) => {
   initGmailClient(clientId, apiKey).then(() => {
-    if ((clientId === undefined || clientId.length === 0)
-      && process.env.REACT_APP_GMAIL_CLIENT_ID === undefined) {
+    if ((clientId === undefined || clientId.length === 0) &&
+      process.env.REACT_APP_GMAIL_CLIENT_ID === undefined) {
       reject(NO_AUTH);
     }
-    if ((apiKey === undefined || apiKey.length === 0)
-      && process.env.REACT_APP_GMAIL_API_KEY === undefined) {
+    if ((apiKey === undefined || apiKey.length === 0) &&
+      process.env.REACT_APP_GMAIL_API_KEY === undefined) {
       reject(NO_AUTH);
     }
 
-    const { gapi } = window;
+    const {
+      gapi,
+    } = window;
 
     const googleAuthInstance = gapi.auth2.getAuthInstance();
 

@@ -11,7 +11,10 @@ export const fetchEmailCounts = () => new Promise((resolve, reject) => {
   }).then((response) => {
     const totalEmails = response.result.messagesTotal;
     const unreadEmails = response.result.messagesUnread;
-    resolve({ totalEmails, unreadEmails });
+    resolve({
+      totalEmails,
+      unreadEmails,
+    });
   }).catch((error) => {
     reject(error);
   });
