@@ -23,6 +23,8 @@
     text-decoration: underline;
     cursor: pointer;
     color: $dark-pink;
+    position: relative;
+    display: inline-block;
 
     &:hover {
       color: $dark-pink-hover;
@@ -30,6 +32,28 @@
       &:after {
         background-color: $dark-pink-hover;
       }
+
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltiptext {
+        visibility: visible;
+      }
+    }
+
+    /* Tooltip text */
+    .tooltiptext {
+      visibility: hidden;
+      width: 50vw;
+      max-width: 450px;
+      background-color: $light-pink;
+      color: $black;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+      top: 20px;
+
+      /* Position the tooltip text - see examples below! */
+      position: absolute;
+      z-index: 1;
     }
 
     &:after {

@@ -9,8 +9,8 @@ export default class EmailItem extends React.PureComponent {
       sender, senderEmail, numUnread, lastEmailDate,
     } = this.props;
 
-    let emailDate = new Date(lastEmailDate);
-    let dateString = (emailDate.getMonth() + 1) + '/' + emailDate.getDate() + '/' + (emailDate.getFullYear());
+    const emailDate = new Date(lastEmailDate);
+    const dateString = `${emailDate.getMonth() + 1}/${emailDate.getDate()}/${emailDate.getFullYear()}`;
 
     return (
       <div className="email-item">
@@ -19,17 +19,18 @@ export default class EmailItem extends React.PureComponent {
           {' '}
           <span className="email-sender-email">{senderEmail}</span>
         </div>
-        <div className="email-filter-link">
+        <a href={(`https://mail.google.com/mail/u/0/#search/from%3A${senderEmail.replace('<', '').replace('>', '').replace('@', '%40')}`)} target="_blank" rel="noopener noreferrer" className="email-filter-link">
+          <span className="tooltiptext">Note: Gmail filter links may take up to 30 seconds to load.</span>
           {numUnread}
           {' '}
           Unread
-        </div>
+        </a>
         <div className="email-last-date">
           Last email:
           {' '}
           {dateString}
         </div>
-      </div>
+      </div >
     );
   }
 }

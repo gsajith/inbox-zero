@@ -1,10 +1,5 @@
 @import "/shared/variables";
 
-$desktop-break1: 850px;
-$min-height: 300px;
-$home-width: 345px;
-$form-width: 268px;
-
 * {
   font-family:'Poppins', sans-serif;
 }
@@ -13,9 +8,16 @@ body {
   background: linear-gradient(121.28deg, $black 0%, $dark-pink 100%);
 }
 
+a {
+  color: $dark-pink;
+  &:hover {
+    color: $dark-pink-hover;
+  }
+}
+
 .container {
   width: 100%;
-  max-width: 800px;
+  max-width: $max-desktop-width;
   margin: auto;
   background: $orange;
   margin-top: 5vh;
@@ -24,120 +26,124 @@ body {
   border-radius: 6px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   min-height: $min-height;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   transition: all 200ms ease-in-out;
 
-  input {
-    min-width: $form-width;
-    min-height: 50px;
-    margin-bottom: 10px;
-    border: none;
-    background: $black;
-    text-align: center;
-    font-size: 16px;
-    letter-spacing: 0.15px;
-    color: $white;
+  .flex-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    &:hover, &:focus {
-      background: $black-hover;
-    }
-
-    &::-webkit-input-placeholder { /* Edge */
-      color: $light-pink;
-    }
-
-    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
-      color: $light-pink;
-    }
-
-    &::placeholder {
-      color: $light-pink;
-    }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus,
-    & :-webkit-autofill:active {
-        transition:  "color 9999s ease-out, background-color 9999s ease-out";
-        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
-        transition-delay: 9999s;
-        -webkit-transition-delay: 9999s;
-    }
-  }
-
-  .title {
-    font-weight: 900;
-    font-size: 36px;
-    letter-spacing: -0.035em;
-    text-transform: uppercase;
-    color: $black;
-    flex-basis: 14%;
-    flex-shrink: 1;
-
-    .title-highlight {
-      color: $dark-pink;
-    }
-  }
-
-  .description {
-    color: $black;
-    font-family: Poppins;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.15px;
-    text-align: center;
-    max-width: $home-width;
-    padding-bottom: 25px;
-    flex-basis: 14%;
-    flex-shrink: 1;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  button {
-    min-width: $form-width;
-    min-height: 50px;
-    margin-bottom: 10px;
-    border: none;
-    background: $dark-pink;
-    box-shadow: 0px 4px 4px rgba(107, 113, 126, 0.3);
-    border-radius: 6px;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: 0.15px;
-    cursor: pointer;
-    transition: background 200ms;
-
-    &.disabled {
-      cursor: initial;
-      background: $light-pink;
-      box-shadow: none;
-      outline: none;
+    input {
+      min-width: $form-width;
+      min-height: 50px;
+      margin-bottom: 10px;
+      border: none;
+      background: $black;
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: 0.15px;
+      color: $white;
 
       &:hover, &:focus {
-        background: $light-pink;
+        background: $black-hover;
+      }
+
+      &::-webkit-input-placeholder { /* Edge */
+        color: $light-pink;
+      }
+
+      &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $light-pink;
+      }
+
+      &::placeholder {
+        color: $light-pink;
+      }
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      & :-webkit-autofill:active {
+          transition:  "color 9999s ease-out, background-color 9999s ease-out";
+          -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+          transition-delay: 9999s;
+          -webkit-transition-delay: 9999s;
       }
     }
 
-    &:hover, &:focus {
-      background: $dark-pink-hover;
+    .title {
+      font-weight: 900;
+      font-size: 36px;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      color: $black;
+      flex-basis: 14%;
+      flex-shrink: 1;
+
+      .title-highlight {
+        color: $dark-pink;
+      }
     }
 
-    &.secondary {
-      background: transparent;
-      color: $dark-pink;
-      box-shadow: none;
-      border: 2px solid $dark-pink;
+    .description {
+      color: $black;
+      font-family: Poppins;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+      text-align: center;
+      max-width: $home-width;
+      padding-bottom: 25px;
+      flex-basis: 14%;
+      flex-shrink: 1;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    button {
+      min-width: $form-width;
+      min-height: 50px;
+      margin-bottom: 10px;
+      border: none;
+      background: $dark-pink;
+      box-shadow: 0px 4px 4px rgba(107, 113, 126, 0.3);
+      border-radius: 6px;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: 0.15px;
+      cursor: pointer;
+      transition: background 200ms;
+
+      &.disabled {
+        cursor: initial;
+        background: $light-pink;
+        box-shadow: none;
+        outline: none;
+
+        &:hover, &:focus {
+          background: $light-pink;
+        }
+      }
 
       &:hover, &:focus {
-        background: $light-pink;
-        color: $dark-pink-hover;
+        background: $dark-pink-hover;
+      }
+
+      &.secondary {
+        background: transparent;
+        color: $dark-pink;
+        box-shadow: none;
+        border: 2px solid $dark-pink;
+
+        &:hover, &:focus {
+          background: $light-pink;
+          color: $dark-pink-hover;
+        }
       }
     }
   }

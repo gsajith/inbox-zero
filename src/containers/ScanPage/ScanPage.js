@@ -1,4 +1,5 @@
 import React from 'react';
+import FlipMove from 'react-flip-move';
 import './ScanPage.scss';
 import PropTypes from 'prop-types';
 import EmailItem from '../EmailItem/EmailItem';
@@ -37,6 +38,21 @@ export default class ScanPage extends React.PureComponent {
 
     emailsArray.sort((a, b) => (a.numUnread < b.numUnread ? 1 : -1));
 
+    let emailsList = emailsArray.map((email) => (
+      <EmailItem
+        key={email.senderEmail}
+        sender={email.sender}
+        senderEmail={email.senderEmail}
+        numUnread={email.numUnread}
+        lastEmailDate={email.lastEmailDate}
+      />
+    ));
+
+    if (numEmails < 1000) {
+      // Only show coslty flip animation if there are few emails
+      emailsList = (<FlipMove>{emailsList}</FlipMove>);
+    }
+
     return (
       <>
         <div className={
@@ -45,15 +61,7 @@ export default class ScanPage extends React.PureComponent {
             : 'emails-container hidden'
         }
         >
-          {emailsArray.map((email) => (
-            <EmailItem
-              key={email.senderEmail}
-              sender={email.sender}
-              senderEmail={email.senderEmail}
-              numUnread={email.numUnread}
-              lastEmailDate={email.lastEmailDate}
-            />
-          ))}
+          {emailsList}
         </div>
         {fetchStatus === FETCH_INACTIVE && (
           <label id="filter" className="check-container" htmlFor="unread-filter" tabIndex="0">

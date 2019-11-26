@@ -1,0 +1,31 @@
+@import "../../shared/variables";
+
+.user-status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: none;
+  position: absolute;
+  align-items: center;
+  right: calc((100vw - #{$max-desktop-width})/2 + 15px);
+  top: calc(5vh + 15px);
+
+  .profile-image-wrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-left: 8px;
+    box-shadow: 0 0 0 2px $dark-pink;
+  }
+
+  .user-name {
+    color: $dark-pink;
+  }
+}
+
+@media only screen and (max-width: $desktop-break1)
+{
+  .user-status {
+    right: 40px;
+  }
+}

@@ -3,6 +3,7 @@ import './App.scss';
 import HomePage from './containers/HomePage/HomePage';
 import LoadingPage from './containers/LoadingPage/LoadingPage';
 import AuthorizePage from './containers/AuthorizePage/AuthorizePage';
+import UserStatus from './containers/UserStatus/UserStatus';
 import ScanPage from './containers/ScanPage/ScanPage';
 import mountScripts from './api/scripts';
 import { signOut, signIn, checkSignInStatus } from './api/authentication';
@@ -22,6 +23,9 @@ let globalEmails = {};
 let globalFetchedEmailCount = 0;
 let updateEmailInterval = 0;
 let updateCountInterval = 0;
+
+// TODO: Create API Key link
+// TODO: Unread check
 
 function millisToMinutes(millis) {
   const minutes = Math.ceil(millis / 60000);
@@ -128,6 +132,10 @@ export default class App extends React.Component {
     this.setState({
       signInStatus: SIGNED_IN,
       user: googleUser,
+      numEmails: 0,
+      emailsFetched: 0,
+      emails: {},
+      fetchStatus: FETCH_INACTIVE,
     });
 
     console.log(googleUser);
@@ -165,33 +173,36 @@ export default class App extends React.Component {
   }
 
   fetchEmails() {
-    this.setState({
-      fetchStatus: FETCH_IN_PROGRESS,
-      emails: {},
-      emailsFetched: 0,
-    });
-
-    globalEmails = {};
-    globalFetchedEmailCount = 0;
-
-    updateEmailInterval = setInterval(this.updateEmails, 1000);
-
-    updateCountInterval = setInterval(this.updateEmailCount, 83);
-
-    listMessages(undefined, 0, (email) => {
-      App.updateFetchedEmails(email);
-      globalFetchedEmailCount += 1;
-    }, () => {
-      clearInterval(updateEmailInterval);
-      clearInterval(updateCountInterval);
-      this.updateEmails();
-      this.updateEmailCount();
+    const { fetchStatus } = this.state;
+    if (fetchStatus !== FETCH_IN_PROGRESS) {
       this.setState({
-        fetchStatus: FETCH_INACTIVE,
+        fetchStatus: FETCH_IN_PROGRESS,
+        emails: {},
+        emailsFetched: 0,
       });
-    }).then().catch((error) => {
-      console.log(error);
-    });
+
+      globalEmails = {};
+      globalFetchedEmailCount = 0;
+
+      updateEmailInterval = setInterval(this.updateEmails, 1000);
+
+      updateCountInterval = setInterval(this.updateEmailCount, 83);
+
+      listMessages(undefined, 0, (email) => {
+        App.updateFetchedEmails(email);
+        globalFetchedEmailCount += 1;
+      }, () => {
+        clearInterval(updateEmailInterval);
+        clearInterval(updateCountInterval);
+        this.updateEmails();
+        this.updateEmailCount();
+        this.setState({
+          fetchStatus: FETCH_INACTIVE,
+        });
+      }).then().catch((error) => {
+        console.log(error);
+      });
+    }
   }
 
   // Adapted from https://github.com/elongineer/react-gmail-client
@@ -231,27 +242,33 @@ export default class App extends React.Component {
 
     return (
       <div className="container">
-        <div className="title">
-          Inbox
-          {' '}
-          <span className="title-highlight">Zero</span>
+        {signInStatus === SIGNED_IN && (
+          <UserStatus
+            user={user} />
+        )}
+        <div className="flex-container">
+          <div className="title">
+            Inbox
+                {' '}
+            <span className="title-highlight">Zero</span>
+          </div>
+          {signInStatus === LOADING && <LoadingPage />}
+          {signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} />}
+          {(signInStatus === AUTH_FAIL || signInStatus === SIGNED_OUT)
+            && <AuthorizePage clickAuthorize={this.onSignIn} />}
+          {signInStatus === SIGNED_IN
+            && (
+              <ScanPage
+                numEmails={numEmails}
+                emailsFetched={emailsFetched}
+                emails={emails}
+                estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
+                signOut={this.onSignout}
+                fetchEmails={this.fetchEmails}
+                fetchStatus={fetchStatus}
+              />
+            )}
         </div>
-        {signInStatus === LOADING && <LoadingPage />}
-        {signInStatus === NO_AUTH && <HomePage clickUseKeys={this.initClient} />}
-        {(signInStatus === AUTH_FAIL || signInStatus === SIGNED_OUT)
-          && <AuthorizePage clickAuthorize={this.onSignIn} />}
-        {signInStatus === SIGNED_IN
-          && (
-            <ScanPage
-              numEmails={numEmails}
-              emailsFetched={emailsFetched}
-              emails={emails}
-              estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
-              signOut={this.onSignout}
-              fetchEmails={this.fetchEmails}
-              fetchStatus={fetchStatus}
-            />
-          )}
       </div>
     );
   }
