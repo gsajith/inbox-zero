@@ -26,10 +26,12 @@ Copy `.env.example` into a new file called `.env` and put your client ID and API
 
 ### Run the app:
 `cd inbox-zero` (or whatever else you called the directory you cloned into)
+
 `npm install`
+
 `npm start`
 
-### Navigate to https://localhost:3000 to see the app running locally!
+### Navigate to https://localhost:8000 to see the app running locally!
 
 ### Authorize your app with the Gmail account you want to scan:
 - Click the "Authorize" button
