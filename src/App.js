@@ -27,6 +27,7 @@ let updateCountInterval = 0;
 // TODO: Create API Key link
 // TODO: Unread check
 // TODO: Overlapping name/about when small screens
+// TODO: Export scan results
 
 function millisToMinutes(millis) {
   const minutes = Math.ceil(millis / 60000);
@@ -93,7 +94,7 @@ export default class App extends React.Component {
       signInStatus: LOADING,
       fetchStatus: FETCH_INACTIVE,
       user: null,
-      aboutModalShown: false,
+      showAboutModal: false,
     };
 
     this.init = this.init.bind(this);
@@ -258,7 +259,7 @@ export default class App extends React.Component {
 
   render() {
     const {
-      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal
+      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal,
     } = this.state;
 
     return (
