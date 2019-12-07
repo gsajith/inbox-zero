@@ -17,8 +17,8 @@ None of these options seemed good, so I've open sourced this tool to let you see
 ```git clone https://github.com/gsajith/inbox-zero.git```
 
 ### Get your own Gmail client ID and API key:
-- Easiest way to do this is through the [Gmail Quickstart tutorial](https://developers.google.com/gmail/api/quickstart/js) which will create a Google Cloud Platform project for you with the Gmail API enabled, and give you both your client ID and API key.
-- Alternatively, you can create a new project and enable the Gmail API yourself via the [Google Cloud Platform dashboard](https://console.cloud.google.com/home/dashboard).
+- Easiest way to do this is through the <a href="https://developers.google.com/gmail/api/quickstart/js" target="_blank">Gmail Quickstart tutorial<a> which will create a Google Cloud Platform project for you with the Gmail API enabled, and give you both your client ID and API key.
+- Alternatively, you can create a new project and enable the Gmail API yourself via the <a href="https://console.cloud.google.com/home/dashboard" target="_blank">Google Cloud Platform dashboard<a>.
 - Don't share these keys publicly.
 
 ### Create `.env` to add your own keys:
@@ -31,7 +31,7 @@ Copy `.env.example` into a new file called `.env` and put your client ID and API
 
 `npm start`
 
-### Navigate to https://localhost:8000 to see the app running locally!
+### Navigate to <a href="https://localhost:8000" target="_blank">https://localhost:8000<a> to see the app running locally!
 
 ### Authorize your app with the Gmail account you want to scan:
 - Click the "Authorize" button
@@ -49,4 +49,4 @@ And… voila! Your results should show up once they've all been fetched, along w
 
 # Don't want to go through the process of cloning and running your own version of the app?
 
-Send me a tweet [@GuamHat](https://twitter.com/GuamHat) and we can talk about whitelisting you to use my version that's running at [https://inbox-zero-app.appspot.com/](https://inbox-zero-app.appspot.com/)!
+Send me a tweet <a href="https://twitter.com/GuamHat" target="_blank">@GuamHat<a> and we can talk about whitelisting you to use my version that's running at <a href="https://inbox-zero-app.appspot.com/" target="_blank">https://inbox-zero-app.appspot.com/<a>!
