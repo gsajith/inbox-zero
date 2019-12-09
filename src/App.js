@@ -154,8 +154,8 @@ export default class App extends React.Component {
       const { totalEmails, unreadEmails } = emailResult;
       // TODO: handle total emails
       this.setState({
-        unreadEmails: unreadEmails,
-        totalEmails: totalEmails,
+        unreadEmails,
+        totalEmails,
       });
     }).catch((error) => {
       // TODO
@@ -275,7 +275,15 @@ export default class App extends React.Component {
 
   render() {
     const {
-      unreadEmails, totalEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal, unreadChecked,
+      unreadEmails,
+      totalEmails,
+      emailsFetched,
+      emails,
+      signInStatus,
+      user,
+      fetchStatus,
+      showAboutModal,
+      unreadChecked,
     } = this.state;
 
     return (
@@ -302,7 +310,9 @@ export default class App extends React.Component {
                   numEmails={unreadChecked ? unreadEmails : totalEmails}
                   emailsFetched={emailsFetched}
                   emails={emails}
-                  estimate={millisToMinutes((unreadChecked ? unreadEmails : totalEmails) * MILLIS_PER_EMAIL)}
+                  estimate={
+                    millisToMinutes((unreadChecked ? unreadEmails : totalEmails) * MILLIS_PER_EMAIL)
+                  }
                   signOut={this.onSignout}
                   fetchEmails={this.fetchEmails}
                   fetchStatus={fetchStatus}
@@ -358,8 +368,7 @@ export default class App extends React.Component {
               </div>
             </div>
           </div>
-        )
-        }
+        )}
       </>
     );
   }

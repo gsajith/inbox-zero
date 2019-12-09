@@ -30,7 +30,7 @@ export default class EmailItem extends React.PureComponent {
           {' '}
           {dateString}
         </div>
-      </div >
+      </div>
     );
   }
 }

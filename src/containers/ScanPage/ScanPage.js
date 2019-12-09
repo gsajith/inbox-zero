@@ -70,8 +70,7 @@ export default class ScanPage extends React.PureComponent {
             <input id="unread-filter" type="checkbox" defaultChecked="checked" onClick={toggleUnreadCheck} />
             <span className="checkmark" />
           </label>
-        )
-        }
+        )}
         <div className="description estimate">
           Estimated time:
           {' '}

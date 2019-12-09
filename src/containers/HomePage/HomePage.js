@@ -1,5 +1,7 @@
 import React from 'react';
 import './HomePage.scss';
+import PropTypes from 'prop-types';
+
 
 export default class HomePage extends React.PureComponent {
   render() {
@@ -29,3 +31,7 @@ export default class HomePage extends React.PureComponent {
     );
   }
 }
+
+HomePage.propTypes = {
+  clickUseKeys: PropTypes.func.isRequired,
+};

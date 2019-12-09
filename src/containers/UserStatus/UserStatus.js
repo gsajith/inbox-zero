@@ -1,5 +1,6 @@
 import React from 'react';
 import './UserStatus.scss';
+import PropTypes from 'prop-types';
 
 export default class UserStatus extends React.PureComponent {
   render() {
@@ -26,3 +27,16 @@ export default class UserStatus extends React.PureComponent {
     );
   }
 }
+
+UserStatus.propTypes = {
+  user: PropTypes.shape(),
+};
+
+UserStatus.defaultProps = {
+  user: {
+    w3: {
+      ig: '',
+      Paa: '',
+    },
+  },
+};

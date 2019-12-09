@@ -1,5 +1,6 @@
 import React from 'react';
 import './AuthorizePage.scss';
+import PropTypes from 'prop-types';
 
 export default class AuthorizePage extends React.PureComponent {
   render() {
@@ -24,3 +25,7 @@ export default class AuthorizePage extends React.PureComponent {
     );
   }
 }
+
+AuthorizePage.propTypes = {
+  clickAuthorize: PropTypes.func.isRequired,
+};
