@@ -87,13 +87,15 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      numEmails: 0,
+      unreadEmails: 0,
+      totalEmails: 0,
       emailsFetched: 0,
       emails: {},
       signInStatus: LOADING,
       fetchStatus: FETCH_INACTIVE,
       user: null,
       showAboutModal: false,
+      unreadChecked: true,
     };
 
     this.init = this.init.bind(this);
@@ -107,6 +109,7 @@ export default class App extends React.Component {
     this.updateEmailCount = this.updateEmailCount.bind(this);
     this.showAboutModal = this.showAboutModal.bind(this);
     this.hideAboutModal = this.hideAboutModal.bind(this);
+    this.toggleUnreadCheck = this.toggleUnreadCheck.bind(this);
   }
 
   componentDidMount() {
@@ -136,10 +139,12 @@ export default class App extends React.Component {
     this.setState({
       signInStatus: SIGNED_IN,
       user: googleUser,
-      numEmails: 0,
+      unreadEmails: 0,
+      totalEmails: 0,
       emailsFetched: 0,
       emails: {},
       fetchStatus: FETCH_INACTIVE,
+      unreadChecked: true,
     });
 
     console.log(googleUser);
@@ -149,7 +154,8 @@ export default class App extends React.Component {
       const { totalEmails, unreadEmails } = emailResult;
       // TODO: handle total emails
       this.setState({
-        numEmails: unreadEmails,
+        unreadEmails: unreadEmails,
+        totalEmails: totalEmails,
       });
     }).catch((error) => {
       // TODO
@@ -160,6 +166,7 @@ export default class App extends React.Component {
   onSignOutSuccess() {
     this.setState({
       signInStatus: SIGNED_OUT,
+      unreadChecked: true,
     });
 
     clearInterval(updateEmailInterval);
@@ -180,7 +187,7 @@ export default class App extends React.Component {
   }
 
   fetchEmails() {
-    const { fetchStatus } = this.state;
+    const { fetchStatus, unreadChecked } = this.state;
     if (fetchStatus !== FETCH_IN_PROGRESS) {
       this.setState({
         fetchStatus: FETCH_IN_PROGRESS,
@@ -195,7 +202,7 @@ export default class App extends React.Component {
 
       updateCountInterval = setInterval(this.updateEmailCount, 83);
 
-      listMessages(undefined, 0, (email) => {
+      listMessages(unreadChecked, undefined, 0, (email) => {
         App.updateFetchedEmails(email);
         globalFetchedEmailCount += 1;
       }, () => {
@@ -205,6 +212,7 @@ export default class App extends React.Component {
         this.updateEmailCount();
         this.setState({
           fetchStatus: FETCH_INACTIVE,
+          unreadChecked: true,
         });
       }).then().catch((error) => {
         console.log(error);
@@ -259,9 +267,15 @@ export default class App extends React.Component {
     e.stopPropagation();
   }
 
+  toggleUnreadCheck() {
+    this.setState((state) => ({
+      unreadChecked: !state.unreadChecked,
+    }));
+  }
+
   render() {
     const {
-      numEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal,
+      unreadEmails, totalEmails, emailsFetched, emails, signInStatus, user, fetchStatus, showAboutModal, unreadChecked,
     } = this.state;
 
     return (
@@ -285,13 +299,14 @@ export default class App extends React.Component {
             {signInStatus === SIGNED_IN
               && (
                 <ScanPage
-                  numEmails={numEmails}
+                  numEmails={unreadChecked ? unreadEmails : totalEmails}
                   emailsFetched={emailsFetched}
                   emails={emails}
-                  estimate={millisToMinutes(numEmails * MILLIS_PER_EMAIL)}
+                  estimate={millisToMinutes((unreadChecked ? unreadEmails : totalEmails) * MILLIS_PER_EMAIL)}
                   signOut={this.onSignout}
                   fetchEmails={this.fetchEmails}
                   fetchStatus={fetchStatus}
+                  toggleUnreadCheck={this.toggleUnreadCheck}
                 />
               )}
           </div>

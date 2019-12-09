@@ -32,7 +32,7 @@ export default class ScanPage extends React.PureComponent {
 
   render() {
     const {
-      emails, numEmails, emailsFetched, estimate, signOut, fetchStatus,
+      emails, numEmails, emailsFetched, estimate, signOut, fetchStatus, toggleUnreadCheck,
     } = this.props;
 
     const emailsArray = Object.values(emails);
@@ -67,18 +67,21 @@ export default class ScanPage extends React.PureComponent {
         {fetchStatus === FETCH_INACTIVE && (
           <label id="filter" className="check-container" htmlFor="unread-filter" tabIndex="0">
             Only scan unread emails
-            <input id="unread-filter" type="checkbox" defaultChecked="checked" />
+            <input id="unread-filter" type="checkbox" defaultChecked="checked" onClick={toggleUnreadCheck} />
             <span className="checkmark" />
           </label>
-        )}
+        )
+        }
         <div className="description estimate">
           Estimated time:
           {' '}
           {estimate}
         </div>
-        {fetchStatus === FETCH_IN_PROGRESS && (
-          <ProgressBar numerator={emailsFetched} denominator={numEmails} />
-        )}
+        {
+          fetchStatus === FETCH_IN_PROGRESS && (
+            <ProgressBar numerator={emailsFetched} denominator={numEmails} />
+          )
+        }
         <button
           onClick={this.fetchEmailsClicked}
           type="button"
@@ -126,6 +129,7 @@ ScanPage.propTypes = {
   signOut: PropTypes.func.isRequired,
   fetchEmails: PropTypes.func.isRequired,
   fetchStatus: PropTypes.string,
+  toggleUnreadCheck: PropTypes.func.isRequired,
 };
 
 ScanPage.defaultProps = {
