@@ -124,9 +124,37 @@ a {
     }
   }
 
+  .about-modal-icon {
+    background: none;
+    position: absolute;
+    background: none;
+    border: none;
+    align-items: center;
+    right: calc((100vw - #{$max-desktop-width})/2 + 15px);
+    bottom: calc(5vh + 15px);
+    font-size: 12px;
+    color: $dark-pink;
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+      background: $light-pink;
+    }
+  }
+
   @media only screen and (max-width: $desktop-break1) {
-    .about-modal-link {
+    .about-modal-link, .about-modal-icon {
       right: 40px;
+    }
+  }
+
+  @media only screen and (max-width: $hide-meta-width) {
+    .about-modal-link {
+      display: none;
+    }
+
+    .about-modal-icon {
+      display: inherit;
     }
   }
 

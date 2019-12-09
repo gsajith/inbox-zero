@@ -9,7 +9,7 @@ export default class HomePage extends React.PureComponent {
         <div className="description">
           Generate your Client ID and API key from
           {' '}
-          <b>THIS LINK</b>
+          <a href="https://developers.google.com/gmail/api/quickstart/js" rel="noopener noreferrer" target="_blank">this tutorial</a>
           . Do not share these keys!
         </div>
         <input id="clientId" type="text" name="clientId" placeholder="Client ID" />

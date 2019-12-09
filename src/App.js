@@ -8,6 +8,7 @@ import ScanPage from './containers/ScanPage/ScanPage';
 import mountScripts from './api/scripts';
 import { signOut, signIn, checkSignInStatus } from './api/authentication';
 import { fetchEmailCounts, listMessages } from './api/api';
+import InfoSVG from './info-24px.svg';
 import {
   SIGNED_OUT,
   SIGNED_IN,
@@ -24,9 +25,7 @@ let globalFetchedEmailCount = 0;
 let updateEmailInterval = 0;
 let updateCountInterval = 0;
 
-// TODO: Create API Key link
 // TODO: Unread check
-// TODO: Overlapping name/about when small screens
 // TODO: Export scan results
 
 function millisToMinutes(millis) {
@@ -295,6 +294,9 @@ export default class App extends React.Component {
           </div>
           <button className="about-modal-link" type="button" onClick={this.showAboutModal}>
             About Inbox Zero
+          </button>
+          <button className="about-modal-icon" type="button" onClick={this.showAboutModal}>
+            <img src={InfoSVG} alt="More info" />
           </button>
         </div>
         {showAboutModal && (

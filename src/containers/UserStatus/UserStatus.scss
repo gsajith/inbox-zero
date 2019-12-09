@@ -28,3 +28,9 @@
     right: 40px;
   }
 }
+
+@media only screen and (max-width: $hide-meta-width) {
+  .user-name {
+    display: none;
+  }
+}
