@@ -6,7 +6,7 @@ export default class ProgressBar extends React.PureComponent {
   render() {
     const { numerator, denominator } = this.props;
 
-    let barStyle = {
+    const barStyle = {
       width: `${(numerator * 100) / denominator}%`,
     };
 
@@ -19,3 +19,8 @@ export default class ProgressBar extends React.PureComponent {
     );
   }
 }
+
+ProgressBar.propTypes = {
+  numerator: PropTypes.number.isRequired,
+  denominator: PropTypes.number.isRequired,
+};
