@@ -25,7 +25,6 @@ let globalFetchedEmailCount = 0;
 let updateEmailInterval = 0;
 let updateCountInterval = 0;
 
-// TODO: Unread check
 // TODO: Export scan results
 
 function millisToMinutes(millis) {
