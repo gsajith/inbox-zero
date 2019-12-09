@@ -3,6 +3,7 @@ import FlipMove from 'react-flip-move';
 import './ScanPage.scss';
 import PropTypes from 'prop-types';
 import EmailItem from '../EmailItem/EmailItem';
+import ProgressBar from './ProgressBar';
 
 import {
   FETCH_INACTIVE,
@@ -75,6 +76,9 @@ export default class ScanPage extends React.PureComponent {
           {' '}
           {estimate}
         </div>
+        {fetchStatus === FETCH_IN_PROGRESS && (
+          <ProgressBar numerator={emailsFetched} denominator={numEmails} />
+        )}
         <button
           onClick={this.fetchEmailsClicked}
           type="button"

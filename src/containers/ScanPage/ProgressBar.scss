@@ -1,0 +1,16 @@
+@import "../../shared/variables";
+
+.progress-bar {
+  background: $black;
+  height: 32px;
+  margin-bottom: 16px;
+  width: 275px;
+
+  .progress-bar-fill {
+    background: $dark-pink;
+    color: $white;
+    padding: 4px;
+    padding-left: 12px;
+    transition: 100ms width ease-in-out;
+  }
+}

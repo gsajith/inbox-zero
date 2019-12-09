@@ -161,6 +161,9 @@ export default class App extends React.Component {
     this.setState({
       signInStatus: SIGNED_OUT,
     });
+
+    clearInterval(updateEmailInterval);
+    clearInterval(updateCountInterval);
     console.log('signed out');
   }
 
