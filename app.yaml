@@ -11,6 +11,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # [START app_yaml]
-env: flex
-runtime: nodejs
+env: standard
+runtime: nodejs12
+instance_class: F1
+automatic_scaling:
+  max_instances: 1
+  min_instances: 0 
 # [END app_yaml]
