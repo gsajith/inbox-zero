@@ -106,3 +106,25 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.emails-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-basis: 45%;
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: flex-basis 600ms ease-in-out;
+
+  &.hidden {
+    flex-basis: 0%
+  }
+}
+
+@media only screen and (max-width: $desktop-break1) {
+  .emails-container {
+    width: calc(100% - 50px);
+  }
+}

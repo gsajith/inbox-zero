@@ -1,0 +1,64 @@
+@import "../../shared/variables";
+
+.container {
+  overflow-y: scroll;
+
+  .flex-container {
+    .title {
+      flex-basis: 10%;
+    }
+  }
+}
+
+.about-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 25px;
+
+  .about-text {
+    margin-top: 15px;
+    color: $black;
+    letter-spacing: 0.15px;
+    padding-bottom: 15px;
+    margin-right: 45px;
+    max-width: $home-width;
+    min-width: $home-width;
+  }
+
+  .about-image {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 1;
+
+    .device {
+      zoom: .6;
+    }
+  }
+
+
+  @media only screen and (max-width: $max-desktop-width) {
+    .about-image {
+      display: none;
+    }
+  }
+}
+.about-footer {
+  font-size: 8px;
+  text-align: center;
+  width: 100%;
+  margin: 15px;
+}
+a {
+  font-weight: 700;
+  color: $black;
+
+  &:hover {
+    color: $dark-pink;
+  }
+}

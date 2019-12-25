@@ -1,0 +1,53 @@
+@import "../../shared/variables";
+.container {
+  .about-link {
+    position: absolute;
+    background: none;
+    border: none;
+    align-items: center;
+    right: calc((100vw - #{$max-desktop-width})/2 + 15px);
+    bottom: calc(5vh + 15px);
+    font-size: 12px;
+    font-weight: 400;
+    color: $black;
+
+    &:hover {
+      cursor: pointer;
+      color: $dark-pink;
+    }
+  }
+
+  .about-icon {
+    background: none;
+    position: absolute;
+    background: none;
+    border: none;
+    align-items: center;
+    right: calc((100vw - #{$max-desktop-width})/2 + 15px);
+    bottom: calc(5vh + 15px);
+    font-size: 12px;
+    color: $dark-pink;
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+      background: $light-pink;
+    }
+  }
+
+  @media only screen and (max-width: $desktop-break1) {
+    .about-link, .about-icon {
+      right: 40px;
+    }
+  }
+
+  @media only screen and (max-width: $hide-meta-width) {
+    .about-link {
+      display: none;
+    }
+
+    .about-icon {
+      display: inherit;
+    }
+  }
+}
